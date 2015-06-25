@@ -1,0 +1,109 @@
+  /* 
+      Basic mixin which vendorizes a propery.  Usage:
+
+      vendorize(box-sizing, border-box)
+  */
+  vendorize(property, value)
+      -webkit-{property} value
+      -moz-{property} value
+      -ms-{property} value
+      {property} value
+
+  setVertical()
+      text-align: center;
+      vertical-align: middle;
+      *display: inline;
+      display: inline-block; 
+      zoom: 1; 
+
+   /* 
+    * http://stackoverflow.com/questions/4801181/vertically-and-horizontally-centering-text-in-circle-in-css-like-iphone-notific
+    */
+  setHorizontalAndVertical(spanWidth=35px, pFont-size=20px)
+    span
+      setVertical();
+      height: spanWidth;
+
+    p
+      setVertical();
+      font-size: pFont-size;
+
+  genNumber(radius=30px)
+    z-index: 2;
+    float: left;
+    position:relative;
+    box-shadow: 1px 1px 1px black;
+    color: white;
+    font: bold 15px/13px Helvetica, Verdana, Tahoma;
+    height: radius
+    min-width: radius
+    text-align: center; 
+
+    /* one half of ( (border * 2) + height + padding ) */
+    border: 0;
+    padding: 4px 3px 0 3px;
+    vendorize(border-radius, (@border * 2 + radius + @padding) / 2 )
+
+  genContent(width=60px, height=25px, _left=-10px, _border-radius=0px 10px 10px 0px)
+    left: _left;
+    width: width;
+    height: height;
+
+    z-index: 1;
+    background: rgb(229,229,229);
+    float: left;
+    position: relative;
+    top: 5px;
+    padding-left: 15px;
+    vendorize(border-radius, _border-radius)
+
+
+  /*
+   * widget - thead bubble
+   */
+
+  .speech-bubble-number-small
+    genNumber()
+    setHorizontalAndVertical()
+    & p
+      padding-right: 3px
+
+  .speech-bubble-content-small
+    genContent()
+    setHorizontalAndVertical(35px, 18px)
+
+
+  .speech-bubble-number-large 
+    genNumber(60px)
+    setHorizontalAndVertical(60px, 30px)
+    & p
+      padding-right: 3px
+
+  .speech-bubble-content-large
+    genContent(50%, 55px, -15px, 0px 16px 16px 0px)
+    setHorizontalAndVertical(65px, 24px)
+    &.p
+      padding-left: 25px
+
+  .speech-bubble-number-middle 
+    genNumber()
+    setHorizontalAndVertical();
+    & p
+      padding-right: 3px
+
+  .speech-bubble-content-middle
+    genContent(50%)
+    setHorizontalAndVertical(35px, 18px)
+    & p
+      padding-left: 5px
+
+  .speech-bubble-severity-high
+    background-color:rgb(245,166,38);
+
+
+  .speech-bubble-severity-critical
+    background-color:red;
+
+  .speech-bubble-content-highlight
+    background-color:rgb(81,81,81);
+    color: white;
